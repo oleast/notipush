@@ -6,6 +6,7 @@
   "author": "dotkom",
   "scripts": {
     "start": "tsc && node ./dist/index.js",
+    "dev": "tsc --watch & nodaemon ./dist/index.js",
     "lint": "yarn lint-ts & yarn lint-prettier",
     "lint:fix": "yarn lint-ts:fix & yarn lint-prettier:fix",
     "lint-ts": "tslint -c tslint.json 'src/**/*.ts'",
@@ -16,8 +17,11 @@
   "devDependencies": {
     "@types/koa": "^2.0.48",
     "@types/koa-bodyparser": "^4.2.1",
+    "@types/koa-cors": "^0.0.0",
     "@types/koa-router": "^7.0.39",
     "@types/node": "^10.12.21",
+    "@types/node-fetch": "^2.1.4",
+    "nodaemon": "^0.0.5",
     "prettier": "^1.16.3",
     "prettier-check": "^2.0.0",
     "tslint": "^5.12.1",
@@ -25,9 +29,11 @@
     "typescript": "^3.3.1"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "node-fetch": "^2.3.0",
     "pg": "^7.8.0",
     "typeorm": "^0.2.12"
   }
