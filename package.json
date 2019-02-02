@@ -4,6 +4,9 @@
   "description": "Webpush server",
   "repository": "git@github.com:oleast/notipush.git",
   "author": "dotkom",
+  "scripts": {
+    "start": "tsc && node ./dist/index.js"
+  },
   "devDependencies": {
     "@types/koa": "^2.0.48",
     "@types/koa-bodyparser": "^4.2.1",
