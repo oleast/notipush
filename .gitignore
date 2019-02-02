@@ -62,3 +62,6 @@ typings/
 
 # output directory
 dist/
+
+# vapid keys
+keys/
