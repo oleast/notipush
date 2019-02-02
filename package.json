@@ -1,0 +1,7 @@
+{
+  "name": "notipush",
+  "version": "0.0.1",
+  "description": "Webpush server",
+  "repository": "git@github.com:oleast/notipush.git",
+  "author": "dotkom"
+}
