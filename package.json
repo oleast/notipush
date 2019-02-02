@@ -5,13 +5,23 @@
   "repository": "git@github.com:oleast/notipush.git",
   "author": "dotkom",
   "scripts": {
-    "start": "tsc && node ./dist/index.js"
+    "start": "tsc && node ./dist/index.js",
+    "lint": "yarn lint-ts && yarn lint-prettier",
+    "lint:fix": "yarn lint-ts:fix && yarn lint-prettier:fix",
+    "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint-ts:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint-prettier": "prettier-check 'src/**/*.{ts,tsx,less}'",
+    "lint-prettier:fix": "prettier-check --write 'src/**/*.{ts,tsx,less}'"
   },
   "devDependencies": {
     "@types/koa": "^2.0.48",
     "@types/koa-bodyparser": "^4.2.1",
     "@types/koa-router": "^7.0.39",
     "@types/node": "^10.12.21",
+    "prettier": "^1.16.3",
+    "prettier-check": "^2.0.0",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.3.1"
   },
   "dependencies": {
