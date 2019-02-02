@@ -1,6 +1,6 @@
-import {Context} from "koa";
-import {getManager} from "typeorm";
-import {Post} from "../entity/Post";
+import {Context} from 'koa';
+import {getManager} from 'typeorm';
+import {Post} from '../entity/Post';
 
 /**
  * Loads all posts from the database.

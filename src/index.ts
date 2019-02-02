@@ -1,9 +1,9 @@
-import "reflect-metadata";
-import {createConnection} from "typeorm";
-import * as Koa from "koa";
-import * as Router from "koa-router";
-import * as bodyParser from "koa-bodyparser";
-import {AppRoutes} from "./routes";
+import * as Koa from 'koa';
+import * as bodyParser from 'koa-bodyparser';
+import * as Router from 'koa-router';
+import 'reflect-metadata';
+import {createConnection} from 'typeorm';
+import {AppRoutes} from './routes';
 
 // create connection with database
 // note that its not active database connection
@@ -23,6 +23,6 @@ createConnection().then(async connection => {
     app.use(router.allowedMethods());
     app.listen(3000);
 
-    console.log("Koa application is up and running on port 3000");
+    console.log('Koa application is up and running on port 3000');
 
-}).catch(error => console.log("TypeORM connection error: ", error));
+}).catch(error => console.log('TypeORM connection error: ', error));
