@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import * as cors from '@koa/cors';
 import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import * as Router from 'koa-router';
@@ -15,6 +16,7 @@ createConnection()
 
     AppRoutes.forEach((route) => router[route.method](route.path, route.action));
 
+    app.use(cors());
     app.use(bodyParser());
     app.use(router.routes());
     app.use(router.allowedMethods());
