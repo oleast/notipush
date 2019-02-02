@@ -6,12 +6,12 @@
   "author": "dotkom",
   "scripts": {
     "start": "tsc && node ./dist/index.js",
-    "lint": "yarn lint-ts && yarn lint-prettier",
-    "lint:fix": "yarn lint-ts:fix && yarn lint-prettier:fix",
-    "lint-ts": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "lint-ts:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
-    "lint-prettier": "prettier-check 'src/**/*.{ts,tsx,less}'",
-    "lint-prettier:fix": "prettier-check --write 'src/**/*.{ts,tsx,less}'"
+    "lint": "yarn lint-ts & yarn lint-prettier",
+    "lint:fix": "yarn lint-ts:fix & yarn lint-prettier:fix",
+    "lint-ts": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint-ts:fix": "tslint --fix -c tslint.json 'src/**/*.ts'",
+    "lint-prettier": "prettier-check 'src/**/*.ts'",
+    "lint-prettier:fix": "prettier-check --write 'src/**/*.ts'"
   },
   "devDependencies": {
     "@types/koa": "^2.0.48",
