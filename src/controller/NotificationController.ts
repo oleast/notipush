@@ -30,3 +30,9 @@ export async function create({ users: userIds, channel: channelName, actions, ..
 
   return null;
 }
+
+export async function finish(noti: Notification) {
+  const notiRepo = getManager().getRepository(Notification);
+  noti.sent = true;
+  notiRepo.save(noti);
+}

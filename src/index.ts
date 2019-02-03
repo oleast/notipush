@@ -7,7 +7,7 @@ import * as Router from 'koa-router';
 import { createConnection } from 'typeorm';
 
 import { HOST, PORT } from './constants/environment';
-import { authenticateUser } from './middlewares';
+import { authenticateBackend, authenticateUser } from './middlewares';
 import { UserRoutes } from './routes';
 
 createConnection()
@@ -17,6 +17,9 @@ createConnection()
 
     router.use('/user', authenticateUser);
     UserRoutes.forEach((route) => router[route.method]('/user' + route.path, route.action));
+
+    router.use('/admin', authenticateBackend);
+    BackendRoutes.forEach((route) => router[route.method]('/admin' + route.path, route.action));
 
     app.use(cors());
     app.use(bodyParser());

@@ -1,6 +1,8 @@
 import { Context } from 'koa';
 import fetch from 'node-fetch';
 
+import { BACKEND_PASS } from './constants/environment';
+
 const USER_DATA_ENDPOINT = 'https://online.ntnu.no/api/v1/profile/?format=json';
 
 export interface IOnlineUser {
@@ -27,5 +29,20 @@ export const authenticateUser = async (context: Context, next: any) => {
     console.log('User: ', user.username);
     context.user = user;
     return next();
+  }
+};
+
+export const authenticateBackend = async (context: Context, next: any) => {
+  // Planning on implementing something more robust.
+  // Thinking about public/private key signing, but it is for the future.
+
+  const authorization: string = context.request.headers.authorization;
+  const pass = authorization.replace('Bearer ', '');
+  console.log(pass);
+  if (pass === BACKEND_PASS) {
+    return next();
+  } else {
+    context.status = 403;
+    context.body = { message: 'Authentication failed' };
   }
 };
