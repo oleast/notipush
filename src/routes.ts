@@ -3,7 +3,7 @@ import { postSubscription } from './action/Subscribe';
 /**
  * All application routes.
  */
-export const AppRoutes = [
+export const UserRoutes = [
   {
     path: '/subscribe',
     method: 'post',

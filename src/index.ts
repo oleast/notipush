@@ -7,14 +7,16 @@ import * as Router from 'koa-router';
 import { createConnection } from 'typeorm';
 
 import { HOST, PORT } from './constants/environment';
-import { AppRoutes } from './routes';
+import { authenticateUser } from './middlewares';
+import { UserRoutes } from './routes';
 
 createConnection()
   .then(async (connection) => {
     const app = new Koa();
     const router = new Router();
 
-    AppRoutes.forEach((route) => router[route.method](route.path, route.action));
+    router.use('/user', authenticateUser)
+    UserRoutes.forEach((route) => router[route.method]('/user' + route.path, route.action));
 
     app.use(cors());
     app.use(bodyParser());
