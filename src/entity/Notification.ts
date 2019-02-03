@@ -1,7 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Channel } from './Channel'
-import { ICreateAction, NotificationAction } from './NotificationAction'
+import { Channel } from './Channel';
+import { ICreateAction, NotificationAction } from './NotificationAction';
 import { User } from './User';
 
 export interface ICreateNotification {
@@ -53,7 +53,7 @@ export class Notification {
 
   @Column({
     type: 'text',
-    default: 'https://beta.online.ntnu.no/static/pwa-icon-v0-192.png'
+    default: 'https://beta.online.ntnu.no/static/pwa-icon-v0-192.png',
   })
   public icon: string;
 

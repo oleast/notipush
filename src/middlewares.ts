@@ -16,16 +16,16 @@ export interface IUserContext extends Context {
 
 export const authenticateUser = async (context: Context, next: any) => {
   const { authorization } = context.request.headers;
-  console.log('Auth header', authorization)
+  console.log('Auth header', authorization);
   const res = await fetch(USER_DATA_ENDPOINT, { headers: { authorization } });
 
   if (res.status === 403) {
     context.status = 403;
     context.body = { message: 'Authentication failed' };
   } else {
-    const user = await res.json() as IOnlineUser;
-    console.log('User: ', user.username)
-    context.user = user
+    const user = (await res.json()) as IOnlineUser;
+    console.log('User: ', user.username);
+    context.user = user;
     return next();
   }
-}
+};

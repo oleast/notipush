@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Channel } from './Channel'
+import { Channel } from './Channel';
 import { User } from './User';
 
 @Entity()

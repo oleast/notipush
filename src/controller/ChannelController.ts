@@ -25,6 +25,6 @@ export async function addSubscription(sub: Subscription, channel: Channel) {
   if (!channel.subscribers) {
     channel.subscribers = [];
   }
-  channel.subscribers.push(sub)
+  channel.subscribers.push(sub);
   await channelRepo.save(channel);
 }

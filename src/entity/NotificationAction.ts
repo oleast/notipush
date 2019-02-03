@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Notification } from './Notification'
+import { Notification } from './Notification';
 
 export interface ICreateAction {
   action: string;

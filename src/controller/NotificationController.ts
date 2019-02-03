@@ -3,7 +3,7 @@ import { getManager } from 'typeorm';
 import * as ChannelCotroller from './ChannelController';
 import * as ActionController from './NotiActionCotroller';
 
-import { ICreateNotification, Notification } from '../entity/Notification'
+import { ICreateNotification, Notification } from '../entity/Notification';
 import { User } from '../entity/User';
 
 export async function create({ users: userIds, channel: channelName, actions, ...incoming }: ICreateNotification) {

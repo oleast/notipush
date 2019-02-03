@@ -15,7 +15,7 @@ createConnection()
     const app = new Koa();
     const router = new Router();
 
-    router.use('/user', authenticateUser)
+    router.use('/user', authenticateUser);
     UserRoutes.forEach((route) => router[route.method]('/user' + route.path, route.action));
 
     app.use(cors());
