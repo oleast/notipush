@@ -1,4 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Notification } from './Notification';
 import { Subscription } from './Subscription';
 
 @Entity()
@@ -17,4 +19,7 @@ export class User {
 
   @OneToMany((type) => Subscription, (sub) => sub.user)
   public subscriptions: Subscription[];
+
+  @ManyToMany((type) => Notification, (noti) => noti.users)
+  public notifications: Notification[];
 }
