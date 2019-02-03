@@ -1,8 +1,26 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Channel } from './Channel'
-import { NotificationAction } from './NotificationAction'
+import { ICreateAction, NotificationAction } from './NotificationAction'
 import { User } from './User';
+
+export interface ICreateNotification {
+  sendTime: string;
+  title: string;
+  body: string;
+  tag?: string;
+  image?: string;
+  icon?: string;
+  requireInteraction?: boolean;
+  renotify?: boolean;
+  silent?: boolean;
+  timestamp?: string;
+  actions: ICreateAction[];
+
+  /** Send to either users or a channel */
+  users?: string[];
+  channel?: string;
+}
 
 @Entity()
 export class Notification {
@@ -54,7 +72,7 @@ export class Notification {
 
   @ManyToMany((type) => User, (user) => user.notifications)
   @JoinTable()
-  public users: User;
+  public users: User[];
 
   @ManyToOne((type) => Channel, (channel) => channel.notifications)
   public channel: Channel;
