@@ -2,6 +2,7 @@ import * as schedule from 'node-schedule';
 import * as webPush from 'web-push';
 import { SendResult } from 'web-push';
 
+import { getAllSubscriptions } from '../controller/ChannelController';
 import * as NotiController from '../controller/NotificationController';
 import { Notification } from '../entity/Notification';
 import { Subscription } from '../entity/Subscription';
@@ -70,7 +71,8 @@ export const triggerNotification = async (noti: Notification) => {
 
   let pushResults: SendResult[] = [];
   if (channel) {
-    const res = channel.subscribers.map((sub) => sendNotification(sub, pushNoti));
+    const subs = await getAllSubscriptions(channel.name);
+    const res = subs.map((sub) => sendNotification(sub, pushNoti));
     pushResults = await Promise.all(res);
   } else if (users) {
     const allSubs = users.reduce<Subscription[]>((subs, user) => [...user.subscriptions, ...subs], []);

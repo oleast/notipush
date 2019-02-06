@@ -1,31 +1,43 @@
+import { createChannel, getAllChannels } from './action/Channels';
 import { createNotificaton } from './action/CreateNotification';
 import { postSubscription } from './action/Subscribe';
+import { getUserChannels, postUserChannels } from './action/UserChannels';
 
 /**
  * All application routes.
  */
-export const UserRoutes = [
+export const PublicRoutes = [
   {
     path: '/subscribe',
     method: 'post',
     action: postSubscription,
   },
   {
-    path: '/channels',
+    path: '/user-channels',
     method: 'get',
     action: getUserChannels,
   },
   {
-    path: '/channels',
-    method: 'put',
-    action: putUserChannels,
+    path: '/user-channels',
+    method: 'post',
+    action: postUserChannels,
   },
+  {
+    path: '/channels',
+    method: 'get',
+    action: getAllChannels
+  }
 ];
 
-export const BackendRoutes = [
+export const PrivateRoutes = [
   {
-    path: '/schedule',
+    path: '/send',
     method: 'post',
     action: createNotificaton,
+  },
+  {
+    path: '/channels',
+    method: 'post',
+    action: createChannel,
   },
 ];
