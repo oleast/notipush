@@ -1,7 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from 'typeorm';
 
 import { Notification } from './Notification';
-import { Subscription } from './Subscription';
+import { User } from './User';
 
 export interface ICreateChannel {
   name: string;
@@ -16,9 +16,9 @@ export class Channel {
   @Column({ type: 'text', unique: true })
   public description: string;
 
-  @ManyToMany((type) => Subscription, (sub) => sub.channels)
+  @ManyToMany((type) => User, (user) => user.channels)
   @JoinTable()
-  public subscribers: Subscription[];
+  public subscribers: User[];
 
   @OneToMany((type) => Notification, (noti) => noti.channel)
   public notifications: Notification[];

@@ -19,7 +19,4 @@ export class Subscription {
 
   @ManyToOne((type) => User, (user) => user.subscriptions)
   public user: User;
-
-  @ManyToMany((type) => Channel, (channel) => channel.subscribers)
-  public channels: Channel[];
 }
