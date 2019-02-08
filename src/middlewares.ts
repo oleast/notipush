@@ -18,7 +18,6 @@ export interface IUserContext extends Context {
 
 export const authenticateUser = async (context: Context, next: any) => {
   const { authorization } = context.request.headers;
-  console.log('Auth header', authorization);
   const res = await fetch(USER_DATA_ENDPOINT, { headers: { authorization } });
 
   if (res.status === 403) {
@@ -26,7 +25,6 @@ export const authenticateUser = async (context: Context, next: any) => {
     context.body = { message: 'Authentication failed' };
   } else {
     const user = (await res.json()) as IOnlineUser;
-    console.log('User: ', user.username);
     context.user = user;
     return next();
   }
@@ -38,7 +36,6 @@ export const authenticateBackend = async (context: Context, next: any) => {
 
   const authorization: string = context.request.headers.authorization;
   const pass = authorization.replace('Bearer ', '');
-  console.log(pass);
   if (pass === BACKEND_PASS) {
     return next();
   } else {

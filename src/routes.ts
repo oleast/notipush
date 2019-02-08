@@ -31,7 +31,7 @@ export const PublicRoutes = [
 
 export const PrivateRoutes = [
   {
-    path: '/send',
+    path: '/create-notification',
     method: 'post',
     action: createNotificaton,
   },

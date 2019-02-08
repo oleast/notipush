@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import * as cors from '@koa/cors';
 import * as Koa from 'koa';
-import * as bodyParser from 'koa-bodyparser';
+import * as koaBody from 'koa-body';
 import * as Router from 'koa-router';
 import { createConnection } from 'typeorm';
 
@@ -23,7 +23,7 @@ createConnection()
     PrivateRoutes.forEach((route) => router[route.method]('/private' + route.path, route.action));
 
     app.use(cors());
-    app.use(bodyParser());
+    app.use(koaBody());
     app.use(router.routes());
     app.use(router.allowedMethods());
     app.listen(PORT, HOST);

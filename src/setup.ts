@@ -1,5 +1,7 @@
 import * as ChannelController from './controller/ChannelController';
+import * as NotiController from './controller/NotificationController';
 import { ICreateChannel } from './entity/Channel';
+import { scheduleNotification } from './utils/push';
 
 const CHANNELS: ICreateChannel[] = [
   { name: 'articles', description: 'Nye artikler' },
@@ -14,6 +16,12 @@ async function setupChannels() {
   await Promise.all(CHANNELS.map(async (channel) => await ChannelController.findOrCreate(channel)));
 }
 
+async function rehydrateSchedule() {
+  const notis = await NotiController.getUnfinished();
+  notis.forEach((noti) => scheduleNotification(noti));
+}
+
 export async function setup() {
   await setupChannels();
+  await rehydrateSchedule();
 }
