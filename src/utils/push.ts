@@ -30,7 +30,9 @@ export interface IPushNotification {
   /** Optional values */
   image?: string;
   tag?: string;
-  data?: any;
+  data: {
+    url: string
+  };
   requireInteraction?: boolean;
   renotify?: boolean;
   silent?: boolean;
@@ -44,47 +46,51 @@ export interface IPushNotification {
 }
 
 const sendNotification = async (sub: Subscription, noti: IPushNotification) => {
-  const notiString = JSON.stringify(noti);
-  const push = await webPush.sendNotification(
-    {
-      endpoint: sub.endpoint,
-      keys: {
-        auth: sub.auth,
-        p256dh: sub.p256dh,
+  try {
+    const notiString = JSON.stringify(noti);
+    const push = await webPush.sendNotification(
+      {
+        endpoint: sub.endpoint,
+        keys: {
+          auth: sub.auth,
+          p256dh: sub.p256dh,
+        },
       },
-    },
-    notiString
-  );
-  return push;
+      notiString
+    );
+    return push;
+  } catch (err) {
+    console.error(`Failed to send notification: ${noti.title}`)
+  }
 };
 
 export const triggerNotification = async (noti: Notification) => {
-  const { sendTime, sent, channel, users, actions: dbActions, ...rest } = noti;
-  const actions = dbActions.map(({ action, title, icon }) => ({ action, title, icon }));
+  const { sendTime, sent, channel, users, actions = [], url, ...rest } = noti;
+  // const actions = dbActions.map(({ action, title, icon }) => ({ action, title, icon }));
   const pushNoti: IPushNotification = {
     ...rest,
     actions,
-    timestamp: 1,
+    timestamp: Date.now(),
     vibrate: Notification.vibrate,
     badge: Notification.badge,
+    data: {
+      url,
+    },
   };
-
-  let pushResults: SendResult[] = [];
   if (channel) {
     const subs = await getAllSubscriptions(channel.name);
     const res = subs.map((sub) => sendNotification(sub, pushNoti));
-    pushResults = await Promise.all(res);
+    await Promise.all(res);
   } else if (users) {
     const allSubs = users.reduce<Subscription[]>((subs, user) => [...user.subscriptions, ...subs], []);
     const res = allSubs.map((sub) => sendNotification(sub, pushNoti));
-    pushResults = await Promise.all(res);
+    await Promise.all(res);
   }
-  pushResults.forEach((res) => console.log(res));
-  NotiController.finish(noti);
+  await NotiController.finish(noti);
 };
 
 export const scheduleNotification = async (noti: Notification) => {
   const time = new Date(Date.parse(noti.sendTime));
   const trigger = () => triggerNotification(noti);
-  const job = schedule.scheduleJob(noti.id.toString(), time, trigger);
+  schedule.scheduleJob(noti.id.toString(), time, trigger);
 };
