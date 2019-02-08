@@ -21,10 +21,14 @@ export async function setChannels(userId: string, channelNames: string[]) {
   const userRepo = getManager().getRepository(User);
   const channelRepo = getManager().getRepository(Channel);
   const user = await userRepo.findOne({ userId });
-  const channels = await channelRepo.find({ where: channelNames.map((name) => ({ name })) });
-  user.channels = channels;
+  if (channelNames.length) {
+    const channels = await channelRepo.find({ where: channelNames.map((name) => ({ name })) });
+    user.channels = channels;
+  } else {
+    user.channels = [];
+  }
   userRepo.save(user);
-  return user;
+  return user.channels;
 }
 
 export async function getChannels(userId: string) {
@@ -39,4 +43,5 @@ export async function getSubsForUsers(userIds: string[]) {
   const subscriptions = users
     .map((user) => user.subscriptions)
     .reduce<Subscription[]>((allSubs, userSubs) => [...allSubs, ...userSubs], []);
+  return subscriptions;
 }

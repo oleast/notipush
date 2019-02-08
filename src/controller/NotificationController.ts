@@ -34,5 +34,11 @@ export async function create({ users: userIds, channel: channelName, actions, ..
 export async function finish(noti: Notification) {
   const notiRepo = getManager().getRepository(Notification);
   noti.sent = true;
-  notiRepo.save(noti);
+  await notiRepo.save(noti);
+}
+
+export async function getUnfinished() {
+  const notiRepo = getManager().getRepository(Notification);
+  const notifications = notiRepo.find({ where: { sent: false }, relations: ['actions'] });
+  return notifications;
 }
