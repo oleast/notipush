@@ -1,20 +1,26 @@
 import 'reflect-metadata';
 
 import * as cors from '@koa/cors';
+import * as Sentry from '@sentry/node';
 import * as Koa from 'koa';
 import * as koaBody from 'koa-body';
 import * as Router from 'koa-router';
 import { createConnection } from 'typeorm';
 
-import { HOST, PORT } from './constants/environment';
+import { DB_CONNECTION } from './constants/database';
+import { HOST, PORT, SENTRY_DSN } from './constants/environment';
 import { authenticateBackend, authenticateUser } from './middlewares';
 import { PrivateRoutes, PublicRoutes } from './routes';
 import { setup } from './setup';
 
-createConnection()
-  .then(async (connection) => {
+Sentry.init({ dsn: SENTRY_DSN });
+
+createConnection(DB_CONNECTION)
+  .then(async (conncetion) => {
     const app = new Koa();
     const router = new Router();
+
+    app.on('error', (err) => Sentry.captureException(err));
 
     router.use('/public', authenticateUser);
     PublicRoutes.forEach((route) => router[route.method]('/public' + route.path, route.action));
