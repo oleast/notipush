@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Channel } from './Channel';
 import { ICreateAction, NotificationAction } from './NotificationAction';
@@ -25,7 +25,7 @@ export interface ICreateNotification {
 
 @Entity()
 export class Notification {
-  public static badge = 'http://localhost:8081/static/owf-badge-128.png';
+  public static badge = 'http://beta.online.ntnu.no/static/owf-badge-128.png';
   /** This is some defualt found on the internet, replace with custom Online version? */
   public static vibrate = [500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500];
   /** For future use, have not found sound to use yet. */
@@ -54,7 +54,7 @@ export class Notification {
 
   @Column({
     type: 'text',
-    default: 'http://localhost:8081/static/pwa-icon-v0-192.png',
+    default: 'http://beta.online.ntnu.no/static/pwa-icon-v0-192.png',
   })
   public icon: string;
 
