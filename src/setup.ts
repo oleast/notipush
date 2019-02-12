@@ -14,11 +14,13 @@ const CHANNELS: ICreateChannel[] = [
 
 async function setupChannels() {
   await Promise.all(CHANNELS.map(async (channel) => await ChannelController.findOrCreate(channel)));
+  console.log('Ensured base Channels existance');
 }
 
 async function rehydrateSchedule() {
   const notis = await NotiController.getUnfinished();
   notis.forEach((noti) => scheduleNotification(noti));
+  console.log('Finished rehydrating notifications');
 }
 
 export async function setup() {
