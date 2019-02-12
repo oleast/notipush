@@ -25,8 +25,8 @@ export const PublicRoutes = [
   {
     path: '/channels',
     method: 'get',
-    action: getAllChannels
-  }
+    action: getAllChannels,
+  },
 ];
 
 export const PrivateRoutes = [

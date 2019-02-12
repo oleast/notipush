@@ -2,11 +2,13 @@ import ow from 'ow';
 import { ICreateNotification } from '../entity/Notification';
 
 const owNoti = {
-  actions: ow.optional.array.ofType(ow.object.exactShape({
-    action: ow.string,
-    title: ow.string,
-    icon: ow.optional.string,
-  })),
+  actions: ow.optional.array.ofType(
+    ow.object.exactShape({
+      action: ow.string,
+      title: ow.string,
+      icon: ow.optional.string,
+    })
+  ),
   body: ow.string,
   channel: ow.optional.string,
   icon: ow.optional.string,

@@ -31,7 +31,7 @@ export interface IPushNotification {
   image?: string;
   tag?: string;
   data: {
-    url: string
+    url: string;
   };
   requireInteraction?: boolean;
   renotify?: boolean;
@@ -60,7 +60,7 @@ const sendNotification = async (sub: Subscription, noti: IPushNotification) => {
     );
     return push;
   } catch (err) {
-    console.error(`Failed to send notification: ${noti.title}`)
+    console.error(`Failed to send notification: ${noti.title}`);
   }
 };
 
@@ -77,6 +77,7 @@ export const triggerNotification = async (noti: Notification) => {
       url,
     },
   };
+  console.log('Triggered notification', noti.title);
   if (channel) {
     const subs = await getAllSubscriptions(channel.name);
     const res = subs.map((sub) => sendNotification(sub, pushNoti));
@@ -93,4 +94,5 @@ export const scheduleNotification = async (noti: Notification) => {
   const time = new Date(Date.parse(noti.sendTime));
   const trigger = () => triggerNotification(noti);
   schedule.scheduleJob(noti.id.toString(), time, trigger);
+  console.log('Scheduled notification', noti.title);
 };
