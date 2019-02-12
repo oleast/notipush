@@ -13,9 +13,8 @@ export async function find(name: string): Promise<Channel | null> {
 export async function getAll(): Promise<Channel[]> {
   const channelRepo = getManager().getRepository(Channel);
   const channels = await channelRepo.find();
-  return channels
+  return channels;
 }
-
 
 export async function findOrCreate(incoming: ICreateChannel) {
   const channelRepo = getManager().getRepository(Channel);

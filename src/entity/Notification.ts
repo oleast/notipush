@@ -25,7 +25,7 @@ export interface ICreateNotification {
 
 @Entity()
 export class Notification {
-  public static badge = 'https://ad1b95f6.ngrok.io/static/owf-badge-128.png';
+  public static badge = 'http://localhost:8081/static/owf-badge-128.png';
   /** This is some defualt found on the internet, replace with custom Online version? */
   public static vibrate = [500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500];
   /** For future use, have not found sound to use yet. */
@@ -54,7 +54,7 @@ export class Notification {
 
   @Column({
     type: 'text',
-    default: 'https://ad1b95f6.ngrok.io/static/pwa-icon-v0-192.png',
+    default: 'http://localhost:8081/static/pwa-icon-v0-192.png',
   })
   public icon: string;
 

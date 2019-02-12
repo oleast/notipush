@@ -33,7 +33,7 @@ export async function setChannels(userId: string, channelNames: string[]) {
 
 export async function getChannels(userId: string) {
   const userRepo = getManager().getRepository(User);
-  const user = await userRepo.findOne({ userId }, { relations: ['channels'] });
+  const [user] = await userRepo.find({ where: { userId }, relations: ['channels'] });
   return user.channels;
 }
 
