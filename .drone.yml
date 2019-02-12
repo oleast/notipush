@@ -1,0 +1,66 @@
+pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    pull: true
+    when:
+      event: [push, pull_request, tag, deployment]
+    restore: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+
+  setup:
+    image: node:11.9.0-alpine
+    when:
+      event: [push, pull_request, tag, deployment]
+    commands:
+      - yarn
+
+  compile-typescript:
+    image: node:11.9.0-alpine
+    group: testing
+    when:
+      event: [push, pull_request, tag, deployment]
+    commands:
+      - yarn run tsc
+
+  lint-typescript:
+    image: node:11.9.0-alpine
+    group: testing
+    when:
+      event: [push, pull_request, tag, deployment]
+    commands:
+      - yarn lint-ts
+
+  lint-prettier:
+    image: node:11.9.0-alpine
+    group: testing
+    when:
+      event: [push, pull_request, tag, deployment]
+    commands:
+      - yarn lint-prettier
+
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    pull: true
+    when:
+      event: [push, pull_request, tag, deployment]
+    rebuild: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+  
+  release:
+    image: plugins/docker
+    secrets: [docker_username, docker_password]
+    when:
+      event: tag
+      status: success
+    repo: registry.online.ntnu.no/dotkom/notipush
+    registry: registry.online.ntnu.no
+    dockerfile: Dockerfile.prod
+    tags:
+      - "${DRONE_TAG}"
+      - latest
