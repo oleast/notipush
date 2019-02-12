@@ -1,6 +1,6 @@
 import { createChannel, getAllChannels } from './action/Channels';
 import { createNotificaton } from './action/CreateNotification';
-import { postSubscription } from './action/Subscribe';
+import { postSubscription, postUbsubscribe } from './action/Subscribe';
 import { getUserChannels, postUserChannels } from './action/UserChannels';
 
 /**
@@ -11,6 +11,11 @@ export const PublicRoutes = [
     path: '/subscribe',
     method: 'post',
     action: postSubscription,
+  },
+  {
+    path: '/unsubscribe',
+    method: 'post',
+    action: postUbsubscribe,
   },
   {
     path: '/user-channels',

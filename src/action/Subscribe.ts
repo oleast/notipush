@@ -13,3 +13,9 @@ export async function postSubscription(context: IUserContext) {
 
   context.body = {};
 }
+
+export async function postUbsubscribe(context: IUserContext) {
+  const sub: PushSubscription = context.request.body;
+  await SubscriptionController.removeFromUser(sub);
+  context.body = {};
+}

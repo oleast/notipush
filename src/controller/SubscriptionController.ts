@@ -23,3 +23,11 @@ export async function addToUser(user: User, subscription: Subscription) {
   subscription.user = user;
   await subsRepo.save(subscription);
 }
+
+export async function removeFromUser(subData: PushSubscription) {
+  const subsRepo = getManager().getRepository(Subscription);
+  const sub = await subsRepo.findOne({ endpoint: subData.endpoint });
+  if (sub) {
+    await subsRepo.delete(sub);
+  }
+}
