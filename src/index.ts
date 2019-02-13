@@ -30,7 +30,12 @@ createConnection(DB_CONNECTION)
 
     OpenRoutes.forEach((route) => router[route.method]('/open' + route.path, route.action));
 
-    app.use(cors({ origin: '*' }));
+    app.use(
+      cors({
+        origin: true,
+        credentials: true,
+      })
+    );
     app.use(koaBody());
     app.use(router.routes());
     app.use(router.allowedMethods());
