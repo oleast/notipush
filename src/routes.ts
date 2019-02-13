@@ -1,5 +1,6 @@
 import { createChannel, getAllChannels } from './action/Channels';
 import { createNotificaton } from './action/CreateNotification';
+import { getStatus } from './action/Status';
 import { postSubscription, postUbsubscribe } from './action/Subscribe';
 import { getUserChannels, postUserChannels } from './action/UserChannels';
 
@@ -44,5 +45,13 @@ export const PrivateRoutes = [
     path: '/channels',
     method: 'post',
     action: createChannel,
+  },
+];
+
+export const OpenRoutes = [
+  {
+    path: '/status',
+    method: 'get',
+    action: getStatus,
   },
 ];
