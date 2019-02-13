@@ -15,6 +15,10 @@ import { setup } from './setup';
 
 Sentry.init({ dsn: SENTRY_DSN });
 
+const corsOptions = {
+  allowMethods: 'POST,GET,PUT,DELETE,OPTIONS',
+};
+
 createConnection(DB_CONNECTION)
   .then(async (conncetion) => {
     const app = new Koa();
@@ -22,7 +26,7 @@ createConnection(DB_CONNECTION)
 
     app.on('error', (err) => Sentry.captureException(err));
 
-    router.use('/', allowCors);
+    router.all('/', allowCors);
 
     router.use('/public', authenticateUser);
     PublicRoutes.forEach((route) => router[route.method]('/public' + route.path, route.action));
@@ -32,6 +36,7 @@ createConnection(DB_CONNECTION)
 
     OpenRoutes.forEach((route) => router[route.method]('/open' + route.path, route.action));
 
+    app.use(cors(corsOptions));
     app.use(koaBody());
     app.use(router.routes());
     app.use(router.allowedMethods());
