@@ -9,7 +9,7 @@ import { createConnection } from 'typeorm';
 
 import { DB_CONNECTION } from './constants/database';
 import { HOST, PORT, SENTRY_DSN } from './constants/environment';
-import { authenticateBackend, authenticateUser } from './middlewares';
+import { allowCors, authenticateBackend, authenticateUser } from './middlewares';
 import { OpenRoutes, PrivateRoutes, PublicRoutes } from './routes';
 import { setup } from './setup';
 
@@ -22,6 +22,8 @@ createConnection(DB_CONNECTION)
 
     app.on('error', (err) => Sentry.captureException(err));
 
+    router.use('/', allowCors);
+
     router.use('/public', authenticateUser);
     PublicRoutes.forEach((route) => router[route.method]('/public' + route.path, route.action));
 
@@ -30,7 +32,6 @@ createConnection(DB_CONNECTION)
 
     OpenRoutes.forEach((route) => router[route.method]('/open' + route.path, route.action));
 
-    app.use(cors({ origin: '*' }));
     app.use(koaBody());
     app.use(router.routes());
     app.use(router.allowedMethods());

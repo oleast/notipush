@@ -16,6 +16,13 @@ export interface IUserContext extends Context {
   user: IOnlineUser;
 }
 
+export const allowCors = async (context: Context, next: any) => {
+  context.set('Access-Control-Allow-Origin', '*');
+  context.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  context.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  await next();
+};
+
 export const authenticateUser = async (context: Context, next: any) => {
   const { authorization } = context.request.headers;
   const res = await fetch(USER_DATA_ENDPOINT, { headers: { authorization } });
