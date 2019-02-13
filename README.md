@@ -85,5 +85,7 @@ type Notification = {
 
 ```
 
+Read more about the notification type: https://web-push-book.gauntface.com/demos/notification-examples/
+
 #### `post: /private/channels`:
 Get all the channels the user subscribes to.
