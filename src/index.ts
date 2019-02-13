@@ -28,7 +28,7 @@ createConnection(DB_CONNECTION)
     router.use('/private', authenticateBackend);
     PrivateRoutes.forEach((route) => router[route.method]('/private' + route.path, route.action));
 
-    app.use(cors());
+    app.use(cors({ origin: '*' }));
     app.use(koaBody());
     app.use(router.routes());
     app.use(router.allowedMethods());
